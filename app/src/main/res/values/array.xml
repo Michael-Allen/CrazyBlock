@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    	<string-array name="Klotski_level">  
+		<item>横刀立马</item> 
+		<item>小燕出巢</item> 
+		<item>水泄不通</item> 
+		<item>近在咫尺</item>  
+    </string-array>  
+</resources>

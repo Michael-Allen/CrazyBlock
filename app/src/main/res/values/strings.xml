@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Crazy block</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="restart">RESTART</string>
+    <string name="back">BACK</string>
+    <string name="score_0">Score: 0</string>
+    <string name="m2048">2048</string>
+    <string name="Klotski">Klotski</string>
+</resources>
