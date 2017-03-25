@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,6 +62,7 @@ public class KlotskiRole extends View implements Cloneable{
         float y = getHeight()/ 2;
         mPaint.setColor(Color.BLACK);
         mPaint.setTextSize(10 * getResources().getDisplayMetrics().density);
+        mPaint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(mName, x, y, mPaint);
 	}
 
@@ -111,10 +111,6 @@ public class KlotskiRole extends View implements Cloneable{
         hasBeenAdd = true;
     }
 
-    public void action(ACTION action) {
-        mLayout.wantMoveTo(action, this);
-    }
-
     public void animationTo(float fromXDelta, float toXDelta, float fromYDelta, float toYDelta) {
         Animation animation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
         startAnimation(animation);
@@ -128,13 +124,21 @@ public class KlotskiRole extends View implements Cloneable{
             float y = e2.getY() - e1.getY();
 
             if (x > FLING_MIN_DISTANCE && Math.abs(velocityX) > Math.abs(velocityY)) {
-                action(ACTION.RIGHT);
+                if ((mMoveFlag & MOVE_FLAG_RIGHT) != 0) {
+                    Toast.makeText(getContext(), "toRight", Toast.LENGTH_SHORT).show();
+                }
             } else if (x < -FLING_MIN_DISTANCE && Math.abs(velocityX) > Math.abs(velocityY)) {
-                action(ACTION.LEFT);
+                if ((mMoveFlag & MOVE_FLAG_LEFT) != 0) {
+                    Toast.makeText(getContext(), "toLeft", Toast.LENGTH_SHORT).show();
+                }
             } else if (y > FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
-                action(ACTION.DOWM);
+                if ((mMoveFlag & MOVE_FLAG_DOWN) != 0) {
+                    Toast.makeText(getContext(), "toDown", Toast.LENGTH_SHORT).show();
+                }
             } else if (y < -FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
-                action(ACTION.UP);
+                if ((mMoveFlag & MOVE_FLAG_UP) != 0) {
+                    Toast.makeText(getContext(), "toUp", Toast.LENGTH_SHORT).show();
+                }
             }
             return true;
         }

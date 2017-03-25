@@ -1,7 +1,5 @@
 package com.gs.blockgame.Klotski;
 
-import android.support.v4.util.ArrayMap;
-import android.widget.RelativeLayout;
 import com.gs.blockgame.Klotski.utils.Utils;
 
 /**
@@ -26,27 +24,12 @@ public class Levle {
         mlevle = levle;
     }
 
-    private void setLevle(int childwidth, int childheight, ArrayMap<String, KlotskiRole> roles)
-    {
-        switch(mlevle)
-        {
-            case 1:
-                break;
-            default :
-                break;
-        }
-    }
-
     public String[][] getLeaveTable() {
         switch (mlevle) {
-            case 1:
+            case 0:
                 return leave1;
             default:
                 return null;
         }
-    }
-
-    public int getlevle() {
-        return mlevle;
     }
 }
