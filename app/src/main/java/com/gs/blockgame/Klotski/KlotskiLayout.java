@@ -428,6 +428,7 @@ public class KlotskiLayout extends RelativeLayout {
                 break;
         }
         syncRolesMvoeflags();
+        checkWin();
     }
 
     public int[] roleToIndex(KlotskiRole role) {
@@ -442,6 +443,13 @@ public class KlotskiLayout extends RelativeLayout {
             }
         }
         return index;
+    }
+
+    private void checkWin() {
+        int[] ccIndex = roleToIndex(mRoles.get(Utils.CC));
+        if (ccIndex[0] == 3 && ccIndex[1] == 1) {
+            Toast.makeText(getContext(), "Win!!!!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

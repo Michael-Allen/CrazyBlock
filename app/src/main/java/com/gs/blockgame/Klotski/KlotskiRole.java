@@ -11,6 +11,9 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
+import com.gs.blockgame.Klotski.utils.Utils;
+import com.gs.blockgame.R;
+
 public class KlotskiRole extends View implements Cloneable{
 
     public static final int MAX = 10;
@@ -56,16 +59,37 @@ public class KlotskiRole extends View implements Cloneable{
 	protected void onDraw(Canvas canvas)
 	{
 		super.onDraw(canvas);
-		String mBgColor = "#CCC0B3";
-        mPaint.setColor(Color.parseColor(mBgColor));
-        mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(0, 0, getWidth(), getHeight(), mPaint);
-        float x = getWidth() / 2;
-        float y = getHeight()/ 2;
-        mPaint.setColor(Color.BLACK);
-        mPaint.setTextSize(10 * getResources().getDisplayMetrics().density);
-        mPaint.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(mName, x, y, mPaint);
+		//String mBgColor = "#CCC0B3";
+        //mPaint.setColor(Color.parseColor(mBgColor));
+        //mPaint.setStyle(Paint.Style.FILL);
+        //canvas.drawRect(0, 0, getWidth(), getHeight(), mPaint);
+        //float x = getWidth() / 2;
+        //float y = getHeight()/ 2;
+        //mPaint.setColor(Color.BLACK);
+        //mPaint.setTextSize(10 * getResources().getDisplayMetrics().density);
+        //mPaint.setTextAlign(Paint.Align.CENTER);
+        //canvas.drawText(mName, x, y, mPaint);
+        if (mName.equals(Utils.CC)) {
+            setBackgroundResource(R.mipmap.caocao);
+        } else if (mName.equals(Utils.GY)) {
+            setBackgroundResource(R.mipmap.guanyu);
+        } else if (mName.equals(Utils.HZ)) {
+            setBackgroundResource(R.mipmap.huangzhong);
+        } else if (mName.equals(Utils.MC)) {
+            setBackgroundResource(R.mipmap.machao);
+        } else if (mName.equals(Utils.SB1)) {
+            setBackgroundResource(R.mipmap.shibing);
+        } else if (mName.equals(Utils.SB2)) {
+            setBackgroundResource(R.mipmap.shibing);
+        } else if (mName.equals(Utils.SB3)) {
+            setBackgroundResource(R.mipmap.shibing);
+        } else if (mName.equals(Utils.SB4)) {
+            setBackgroundResource(R.mipmap.shibing);
+        } else if (mName.equals(Utils.ZF)) {
+            setBackgroundResource(R.mipmap.zhangfei);
+        } else if (mName.equals(Utils.ZY)) {
+            setBackgroundResource(R.mipmap.zhaoyun);
+        }
 	}
 
 	@Override
