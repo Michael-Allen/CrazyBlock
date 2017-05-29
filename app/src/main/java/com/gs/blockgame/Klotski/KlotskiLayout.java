@@ -113,7 +113,7 @@ public class KlotskiLayout extends RelativeLayout {
         if (mScoreStack == null) {
             mScoreStack = new Stack<Integer>();
         }
-        Levle levle = new Levle(1);
+        Levle levle = new Levle(0);
         mRolesTable = levle.getLeaveTable();
     }
 
@@ -190,8 +190,20 @@ public class KlotskiLayout extends RelativeLayout {
                     lp.topMargin = childHeight * i;
                     lp.leftMargin = childWidth * j;
                     addView(role, lp);
-                    role.init(type);
-                } else {
+                    role.init(type, childWidth, childHeight);
+                }
+            }
+        }
+        syncRolesMvoeflags();
+    }
+
+    private void syncRolesMvoeflags() {
+        clearRolesMvoeflags();
+
+        for (int i = 0; i < HIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                String rolesName = mRolesTable[i][j];
+                if (rolesName == null) {
                     if (mBlankType == BLANKTYPE.NONE) {
                         mBlank1[0] = i;
                         mBlank1[1] = j;
@@ -209,47 +221,33 @@ public class KlotskiLayout extends RelativeLayout {
                 }
             }
         }
-        syncRolesMvoeflags();
-    }
 
-    private void syncRolesMvoeflags() {
-        clearRolesMvoeflags();
-        int i;
-        int j;
         switch (mBlankType) {
             case INDEPENDENT:
-                i = mBlank1[0];
-                j = mBlank1[1];
+                int i = mBlank1[0];
+                int j = mBlank1[1];
                 if (i - 1 >= 0) {
                     KlotskiRole role = mRoles.get(mRolesTable[i-1][j]);
                     if (role.getRoleWidth() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_DOWN;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (i < HIGHT - 1) {
                     KlotskiRole role = mRoles.get(mRolesTable[i+1][j]);
                     if (role.getRoleWidth() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_UP;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (j - 1 >= 0) {
                     KlotskiRole role = mRoles.get(mRolesTable[i][j-1]);
                     if (role.getRoleHeight() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_RIGHT;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (j < WIDTH - 1) {
                     KlotskiRole role = mRoles.get(mRolesTable[i][j+1]);
                     if (role.getRoleHeight() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_LEFT;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
 
@@ -259,32 +257,24 @@ public class KlotskiLayout extends RelativeLayout {
                     KlotskiRole role = mRoles.get(mRolesTable[i-1][j]);
                     if (role.getRoleWidth() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_DOWN;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (i < HIGHT - 1) {
                     KlotskiRole role = mRoles.get(mRolesTable[i+1][j]);
                     if (role.getRoleWidth() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_UP;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (j - 1 >= 0) {
                     KlotskiRole role = mRoles.get(mRolesTable[i][j-1]);
                     if (role.getRoleHeight() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_RIGHT;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (j < WIDTH - 1) {
                     KlotskiRole role = mRoles.get(mRolesTable[i][j+1]);
                     if (role.getRoleHeight() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_LEFT;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 break;
@@ -295,16 +285,12 @@ public class KlotskiLayout extends RelativeLayout {
                     KlotskiRole role = mRoles.get(mRolesTable[i-1][j]);
                     if (role.getRoleWidth() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_DOWN;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (i < HIGHT - 2) {
                     KlotskiRole role = mRoles.get(mRolesTable[i+2][j]);
                     if (role.getRoleWidth() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_UP;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (j - 1 >= 0) {
@@ -315,13 +301,9 @@ public class KlotskiLayout extends RelativeLayout {
                     } else {
                         if (role1.getRoleHeight() == 1) {
                             role1.mMoveFlag = role1.mMoveFlag | KlotskiRole.MOVE_FLAG_RIGHT;
-                        } else {
-                            role1.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                         if (role2.getRoleHeight() == 1) {
                             role2.mMoveFlag = role2.mMoveFlag | KlotskiRole.MOVE_FLAG_RIGHT;
-                        } else {
-                            role2.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                     }
                 }
@@ -333,13 +315,9 @@ public class KlotskiLayout extends RelativeLayout {
                     } else {
                         if (role1.getRoleHeight() == 1) {
                             role1.mMoveFlag = role1.mMoveFlag | KlotskiRole.MOVE_FLAG_LEFT;
-                        } else {
-                            role1.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                         if (role2.getRoleHeight() == 1) {
                             role2.mMoveFlag = role2.mMoveFlag | KlotskiRole.MOVE_FLAG_LEFT;
-                        } else {
-                            role2.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                     }
                 }
@@ -351,16 +329,12 @@ public class KlotskiLayout extends RelativeLayout {
                     KlotskiRole role = mRoles.get(mRolesTable[i][j-1]);
                     if (role.getRoleHeight() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_RIGHT;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (j < WIDTH - 2) {
                     KlotskiRole role = mRoles.get(mRolesTable[i][j+2]);
                     if (role.getRoleHeight() == 1) {
                         role.mMoveFlag = role.mMoveFlag | KlotskiRole.MOVE_FLAG_LEFT;
-                    } else {
-                        role.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                     }
                 }
                 if (i - 1 >= 0) {
@@ -371,17 +345,13 @@ public class KlotskiLayout extends RelativeLayout {
                     } else {
                         if (role1.getRoleWidth() == 1) {
                             role1.mMoveFlag = role1.mMoveFlag | KlotskiRole.MOVE_FLAG_DOWN;
-                        } else {
-                            role1.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                         if (role2.getRoleWidth() == 1) {
                             role2.mMoveFlag = role2.mMoveFlag | KlotskiRole.MOVE_FLAG_DOWN;
-                        } else {
-                            role2.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                     }
                 }
-                if (i < WIDTH - 1) {
+                if (i < HIGHT - 1) {
                     KlotskiRole role1 = mRoles.get(mRolesTable[i+1][j]);
                     KlotskiRole role2 = mRoles.get(mRolesTable[i+1][j+1]);
                     if (role1.equals(role2)) {
@@ -389,13 +359,9 @@ public class KlotskiLayout extends RelativeLayout {
                     } else {
                         if (role1.getRoleWidth() == 1) {
                             role1.mMoveFlag = role1.mMoveFlag | KlotskiRole.MOVE_FLAG_UP;
-                        } else {
-                            role1.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                         if (role2.getRoleWidth() == 1) {
                             role2.mMoveFlag = role2.mMoveFlag | KlotskiRole.MOVE_FLAG_UP;
-                        } else {
-                            role2.mMoveFlag = KlotskiRole.MOVE_FLAG_CANT;
                         }
                     }
                 }
@@ -414,81 +380,68 @@ public class KlotskiLayout extends RelativeLayout {
         mRoles.get(Utils.SB2).mMoveFlag = 0;
         mRoles.get(Utils.SB3).mMoveFlag = 0;
         mRoles.get(Utils.SB4).mMoveFlag = 0;
+        mBlankType = BLANKTYPE.NONE;
     }
 
-    public void wantMoveTo(ACTION action, KlotskiRole role) {
+    public void rolesMoveTo(ACTION action, KlotskiRole role) {
+        int[] roleIndex = roleToIndex(role);
         switch (action) {
             case RIGHT:
-                if ((role.mMoveFlag & KlotskiRole.MOVE_FLAG_RIGHT) != 0) {
-                    Toast.makeText(getContext(), "toRight", Toast.LENGTH_SHORT).show();
+                for (int i = roleIndex[0]; i < roleIndex[0] + role.getRoleHeight(); i++) {
+                    for (int j = roleIndex[1]; j < roleIndex[1] + role.getRoleWidth(); j++) {
+                        mRolesTable[i][j+1] = role.getName();
+                    }
+                }
+                for (int i = 0; i < role.getRoleHeight(); i++) {
+                    mRolesTable[roleIndex[0] + i][roleIndex[1]] = null;
                 }
                 break;
             case LEFT:
-                if ((role.mMoveFlag & KlotskiRole.MOVE_FLAG_LEFT) != 0) {
-                    Toast.makeText(getContext(), "toLeft", Toast.LENGTH_SHORT).show();
+                for (int i = roleIndex[0]; i < roleIndex[0] + role.getRoleHeight(); i++) {
+                    for (int j = roleIndex[1]; j < roleIndex[1] + role.getRoleWidth(); j++) {
+                        mRolesTable[i][j-1] = role.getName();
+                    }
+                }
+                for (int i = 0; i < role.getRoleHeight(); i++) {
+                    mRolesTable[roleIndex[0] + i][roleIndex[1] + (role.getRoleWidth() - 1)] = null;
                 }
                 break;
             case DOWM:
-                if ((role.mMoveFlag & KlotskiRole.MOVE_FLAG_DOWN) != 0) {
-                    Toast.makeText(getContext(), "toDown", Toast.LENGTH_SHORT).show();
+                for (int i = roleIndex[0]; i < roleIndex[0] + role.getRoleHeight(); i++) {
+                    for (int j = roleIndex[1]; j < roleIndex[1] + role.getRoleWidth(); j++) {
+                        mRolesTable[i+1][j] = role.getName();
+                    }
+                }
+                for (int i = 0; i < role.getRoleWidth(); i++) {
+                    mRolesTable[roleIndex[0]][roleIndex[1] + i] = null;
                 }
                 break;
             case UP:
-                if ((role.mMoveFlag & KlotskiRole.MOVE_FLAG_UP) != 0) {
-                    Toast.makeText(getContext(), "toUp", Toast.LENGTH_SHORT).show();
+                for (int i = roleIndex[0]; i < roleIndex[0] + role.getRoleHeight(); i++) {
+                    for (int j = roleIndex[1]; j < roleIndex[1] + role.getRoleWidth(); j++) {
+                        mRolesTable[i-1][j] = role.getName();
+                    }
+                }
+                for (int i = 0; i < role.getRoleWidth(); i++) {
+                    mRolesTable[roleIndex[0] + (role.getRoleHeight() -1)][roleIndex[1] + i] = null;
                 }
                 break;
         }
+        syncRolesMvoeflags();
     }
 
-    public ArrayList<int[]> roleToIndex(KlotskiRole role) {
+    public int[] roleToIndex(KlotskiRole role) {
         String name = role.getName();
-        ArrayList<int[]> indexArray = new ArrayList<int[]>();
         int[] index = new int[2];
         for (int i = 0; i < HIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 if(name.equals(mRolesTable[i][j])) {
-                    index  = new int[2]; index[0] = i; index[1] = j;
-                    indexArray.add(index);
+                    index[0] = i; index[1] = j;
+                    return index;
                 }
             }
         }
-        return indexArray;
-    }
-
-    private void clearRoleCurrentPosition(KlotskiRole role) {
-        /*switch (role.getType()) {
-            case SMALL_SQUARE:
-                mRolesTable[role.getHeadX()][role.getHeadY()] = null;
-            case LARGE_SQUARE:
-                mRolesTable[][]=null;
-                mRolesTable[][]=null;
-                mRolesTable[][]=null;
-                mRolesTable[][]=null;
-            case HORIZONTAL_RECTANGLE:
-                mRolesTable[][]=null;
-                mRolesTable[][]=null;
-            case VERTICAL_RECTANGLE:
-                mRolesTable[][]=null;
-                mRolesTable[][]=null;
-
-        }*/
-    }
-
-    /**
-     * �õ���ֵ�е���Сֵ
-     *
-     * @param params
-     * @return
-     */
-    private int min(int... params) {
-        int min = params[0];
-        for (int param : params) {
-            if (min > param) {
-                min = param;
-            }
-        }
-        return min;
+        return index;
     }
 
     /**

@@ -26,6 +26,8 @@ public class KlotskiRole extends View implements Cloneable{
     private TYPE mType = TYPE.SMALL_SQUARE;
     private int mWidth = 1;
     private int mHeight = 1;
+    private int mUnitWidth;
+    private int mUnitHeight;
     public int mMoveFlag = MOVE_FLAG_CANT;
 
     public enum TYPE
@@ -88,8 +90,10 @@ public class KlotskiRole extends View implements Cloneable{
         return mHeight;
     }
 
-    public void init(TYPE type) {
+    public void init(TYPE type, int unitWidth, int unitHeight) {
         mType = type;
+        mUnitWidth = unitWidth;
+        mUnitHeight = unitHeight;
         switch (mType) {
             case SMALL_SQUARE:
                 mWidth = 1;
@@ -111,11 +115,6 @@ public class KlotskiRole extends View implements Cloneable{
         hasBeenAdd = true;
     }
 
-    public void animationTo(float fromXDelta, float toXDelta, float fromYDelta, float toYDelta) {
-        Animation animation = new TranslateAnimation(fromXDelta, toXDelta, fromYDelta, toYDelta);
-        startAnimation(animation);
-    }
-
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         final int FLING_MIN_DISTANCE = 50;
         @Override
@@ -125,19 +124,27 @@ public class KlotskiRole extends View implements Cloneable{
 
             if (x > FLING_MIN_DISTANCE && Math.abs(velocityX) > Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_RIGHT) != 0) {
-                    Toast.makeText(getContext(), "toRight", Toast.LENGTH_SHORT).show();
+                    setX(getX() + mUnitWidth);
+                    mLayout.rolesMoveTo(ACTION.RIGHT, KlotskiRole.this);
+                    Toast.makeText(getContext(), getName() + "toRight", Toast.LENGTH_SHORT).show();
                 }
             } else if (x < -FLING_MIN_DISTANCE && Math.abs(velocityX) > Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_LEFT) != 0) {
-                    Toast.makeText(getContext(), "toLeft", Toast.LENGTH_SHORT).show();
+                    setX(getX() - mUnitWidth);
+                    mLayout.rolesMoveTo(ACTION.LEFT, KlotskiRole.this);
+                    Toast.makeText(getContext(), getName() + "toLeft", Toast.LENGTH_SHORT).show();
                 }
             } else if (y > FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_DOWN) != 0) {
-                    Toast.makeText(getContext(), "toDown", Toast.LENGTH_SHORT).show();
+                    setY(getY() + mUnitHeight);
+                    mLayout.rolesMoveTo(ACTION.DOWM, KlotskiRole.this);
+                    Toast.makeText(getContext(), getName() + "toDown", Toast.LENGTH_SHORT).show();
                 }
             } else if (y < -FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_UP) != 0) {
-                    Toast.makeText(getContext(), "toUp", Toast.LENGTH_SHORT).show();
+                    setY(getY() - mUnitHeight);
+                    mLayout.rolesMoveTo(ACTION.UP, KlotskiRole.this);
+                    Toast.makeText(getContext(), getName() + "toUp", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;

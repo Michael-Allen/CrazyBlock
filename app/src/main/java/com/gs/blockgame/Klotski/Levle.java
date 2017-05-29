@@ -10,7 +10,7 @@ public class Levle {
 
     private int mlevle;
 
-    static final private String[][] leave1 = new String[][]
+    static final private String[][] LEAVE1 = new String[][]
     {
         {Utils.HZ, Utils.CC, Utils.CC, Utils.ZY},
         {Utils.HZ, Utils.CC, Utils.CC, Utils.ZY},
@@ -27,7 +27,7 @@ public class Levle {
     public String[][] getLeaveTable() {
         switch (mlevle) {
             case 0:
-                return leave1;
+                return LEAVE1;
             default:
                 return null;
         }
