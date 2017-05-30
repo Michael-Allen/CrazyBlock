@@ -150,25 +150,25 @@ public class KlotskiRole extends View implements Cloneable{
                 if ((mMoveFlag & MOVE_FLAG_RIGHT) != 0) {
                     setX(getX() + mUnitWidth);
                     mLayout.rolesMoveTo(ACTION.RIGHT, KlotskiRole.this);
-                    Toast.makeText(getContext(), getName() + "toRight", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), getName() + "toRight", Toast.LENGTH_SHORT).show();
                 }
             } else if (x < -FLING_MIN_DISTANCE && Math.abs(velocityX) > Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_LEFT) != 0) {
                     setX(getX() - mUnitWidth);
                     mLayout.rolesMoveTo(ACTION.LEFT, KlotskiRole.this);
-                    Toast.makeText(getContext(), getName() + "toLeft", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), getName() + "toLeft", Toast.LENGTH_SHORT).show();
                 }
             } else if (y > FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_DOWN) != 0) {
                     setY(getY() + mUnitHeight);
                     mLayout.rolesMoveTo(ACTION.DOWM, KlotskiRole.this);
-                    Toast.makeText(getContext(), getName() + "toDown", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), getName() + "toDown", Toast.LENGTH_SHORT).show();
                 }
             } else if (y < -FLING_MIN_DISTANCE && Math.abs(velocityX) < Math.abs(velocityY)) {
                 if ((mMoveFlag & MOVE_FLAG_UP) != 0) {
                     setY(getY() - mUnitHeight);
                     mLayout.rolesMoveTo(ACTION.UP, KlotskiRole.this);
-                    Toast.makeText(getContext(), getName() + "toUp", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), getName() + "toUp", Toast.LENGTH_SHORT).show();
                 }
             }
             return true;
